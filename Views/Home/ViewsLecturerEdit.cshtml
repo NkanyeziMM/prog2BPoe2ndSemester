@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Edit Lecturer";
+}
+
+<h2>Edit Lecturer</h2>
+
+<form method="post">
+    <div>
+        <label for="Name">Name</label>
+        <input type="text" id="Name" name="Name" value="@Model.Name" />
+    </div>
+    <div>
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" value="@Model.Email" />
+    </div>
+    <div>
+        <label for="HourlyRate">Hourly Rate</label>
+        <input type="number" id="HourlyRate" name="HourlyRate" value="@Model.HourlyRate" />
+    </div>
+    <button type="submit">Save Changes</button>
+</form>

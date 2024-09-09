@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Supporting Document Details";
+}
+
+<h2>Supporting Document Details</h2>
+
+<p>
+    <strong>Document Path:</strong> @Model.DocumentPath
+</p>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>

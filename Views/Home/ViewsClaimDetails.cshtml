@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Claim Details";
+}
+
+<h2>Claim Details</h2>
+
+<p>
+    <strong>Lecturer ID:</strong> @Model.LecturerID
+</p>
+<p>
+    <strong>Hours Worked:</strong> @Model.HoursWorked
+</p>
+<p>
+    <strong>Total Amount:</strong> @Model.TotalAmount
+</p>
+<p>
+    <strong>Claim Status:</strong> @Model.ClaimStatus
+</p>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>

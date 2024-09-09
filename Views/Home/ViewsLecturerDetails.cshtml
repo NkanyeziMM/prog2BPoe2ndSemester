@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Lecturer Details";
+}
+
+<h2>Lecturer Details</h2>
+
+<p>
+    <strong>Name:</strong> @Model.Name
+</p>
+<p>
+    <strong>Email:</strong> @Model.Email
+</p>
+<p>
+    <strong>Hourly Rate:</strong> @Model.HourlyRate
+</p>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>
