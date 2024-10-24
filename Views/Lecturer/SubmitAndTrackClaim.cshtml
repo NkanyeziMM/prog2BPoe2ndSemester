@@ -1,0 +1,161 @@
+﻿@model List<PROG6212_Part1.Models.Claim>
+
+<style>
+    /* Global styles for the entire page */
+    body {
+        background-color: #e6f7f1; /* Soft mint background for a fresh look */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean and modern font */
+        margin: 0;
+        padding: 20px;
+    }
+
+    /* Styling for the heading */
+    h2 {
+        background-color: #ffffff; /* White background for a clean feel */
+        color: #2c3e50; /* Dark blue-grey for text */
+        padding: 20px;
+        border-radius: 8px; /* Softer rounded corners */
+        text-align: center;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Deeper shadow effect */
+        font-weight: 600; /* Slightly bolder heading */
+    }
+
+    /* Styling for form sections */
+    .submit-claim, .track-claims {
+        background-color: #ffffff; /* Contrast white sections */
+        padding: 25px;
+        border-radius: 12px; /* More pronounced rounded corners */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+        margin-bottom: 25px;
+        border-left: 5px solid #1abc9c; /* Accent color for the left border */
+    }
+
+    /* Styling for form labels */
+    label {
+        font-weight: 500;
+        margin-bottom: 10px;
+        display: block; /* Block elements for better spacing */
+        color: #34495e;
+    }
+
+    /* Styling for input fields and textareas */
+    input.form-control, textarea.form-control {
+        font-family: inherit;
+        color: #2c3e50;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px;
+        width: 100%;
+        margin-bottom: 15px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+    }
+
+    /* Styling for the submit button */
+    button {
+        font-family: inherit;
+        background-color: #1abc9c; /* Mint green for the button */
+        color: #ffffff;
+        border-radius: 8px;
+        padding: 12px 24px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s, transform 0.2s ease; /* Smooth transition and hover effect */
+    }
+
+        button:hover {
+            background-color: #16a085; /* Darker mint on hover */
+            transform: translateY(-2px); /* Lift effect on hover */
+        }
+
+    /* Styling for the table */
+    table {
+        width: 100%;
+        background-color: #ffffff;
+        font-family: inherit;
+        color: #2c3e50;
+        border-collapse: collapse;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for the table */
+    }
+
+    /* Styling for table headers and cells */
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    /* Styling for table headers */
+    th {
+        background-color: #16a085; /* Dark mint for headers */
+        color: white;
+        font-weight: 600;
+    }
+
+    /* Styling for even rows */
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    /* Styling for document link */
+    a {
+        color: #1abc9c; /* Mint color for links */
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
+
+<h2>Submit a Claim</h2>
+<form asp-action="SubmitClaim" method="post" enctype="multipart/form-data">
+    <div class="submit-claim">
+        <label>Lecturer Name:</label>
+        <input type="text" name="lecturer" class="form-control" required />
+        <label>Hours Worked:</label>
+        <input type="number" name="hoursWorked" class="form-control" required />
+        <label>Hourly Rate:</label>
+        <input type="number" name="hourlyRate" class="form-control" required />
+        <label>Notes (optional):</label>
+        <textarea name="notes" class="form-control"></textarea>
+        <label>Upload Document:</label>
+        <input type="file" name="document" accept=".pdf,.docx,.xlsx" class="form-control" required />
+        <small>Allowed file types: .pdf, .docx, .xlsx (max size 5MB)</small>
+        <button type="submit">Submit Claim</button>
+    </div>
+</form>
+
+<h2>Track Claims</h2>
+<div class="track-claims">
+    <table>
+        <thead>
+            <tr>
+                <th>Claim ID</th>
+                <th>Lecturer</th>
+                <th>Hours Worked</th>
+                <th>Status</th>
+                <th>Document</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.ClaimId</td>
+                    <td>@claim.Lecturer</td>
+                    <td>@claim.HoursWorked</td>
+                    <td>@claim.Status</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                        {
+                            <a href="@claim.DocumentPath" target="_blank">View Document</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

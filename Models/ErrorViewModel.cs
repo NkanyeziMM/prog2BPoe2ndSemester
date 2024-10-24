@@ -1,4 +1,4 @@
-namespace CMcs.Models
+namespace PROG6212_Part1.Models
 {
     public class ErrorViewModel
     {

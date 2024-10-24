@@ -1,0 +1,140 @@
+﻿@model List<PROG6212_Part1.Models.Claim>
+
+<style>
+    /* Background styling for the entire page */
+    body {
+        background-color: #e0f7fa; /* Light blue background */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    /* Styling for the heading (h2) */
+    h2 {
+        background-color: #00796b; /* Teal background */
+        color: #ffffff; /* White font color */
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 24px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 25px;
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #ffffff; /* White background */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 14px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #004d40; /* Dark teal for header */
+        color: #ffffff;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    /* Button styles */
+    .btn {
+        font-family: 'Arial', sans-serif;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-success {
+        background-color: #26a69a; /* Light teal for success */
+        color: #ffffff;
+    }
+
+        .btn-success:hover {
+            background-color: #00796b; /* Darker teal on hover */
+            transform: scale(1.05); /* Slight scale effect */
+        }
+
+    .btn-danger {
+        background-color: #ef5350; /* Red for danger */
+        color: #ffffff;
+    }
+
+        .btn-danger:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+            transform: scale(1.05); /* Slight scale effect */
+        }
+
+    /* Disabled button style */
+    button[disabled] {
+        background-color: #b0bec5; /* Light grey for disabled */
+        cursor: not-allowed;
+    }
+
+    td form {
+        display: inline-block;
+        margin-right: 8px;
+    }
+
+    /* Hover effect on rows */
+    tr:hover {
+        background-color: #f1f8e9; /* Light green hover effect */
+    }
+
+</style>
+
+<h2>Review Claims</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Claim ID</th>
+            <th>Lecturer</th>
+            <th>Hours Worked</th>
+            <th>Status</th>
+            <th>Document</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.ClaimId</td>
+                <td>@claim.Lecturer</td>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.Status</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                    {
+                        <a href="@claim.DocumentPath" target="_blank" style="color: #00796b; text-decoration: underline;">View Document</a>
+                    }
+                </td>
+                <td>
+                    <form asp-action="ApproveClaim" method="post">
+                        <input type="hidden" name="claimId" value="@claim.ClaimId" />
+                        <button type="submit" class="btn btn-success" @(claim.Status == "Pending" ? "" : "disabled")>Approve</button>
+                    </form>
+                    <form asp-action="RejectClaim" method="post">
+                        <input type="hidden" name="claimId" value="@claim.ClaimId" />
+                        <button type="submit" class="btn btn-danger" @(claim.Status == "Pending" ? "" : "disabled")>Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
