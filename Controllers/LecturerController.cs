@@ -27,9 +27,24 @@ namespace PROG6212_Part1.Controllers
         public IActionResult SubmitClaim(string lecturer, int hoursWorked, decimal hourlyRate, string notes, IFormFile document)
         {
             // Validate input fields
-            if (hoursWorked <= 0 || hourlyRate <= 0 || document == null)
+            if (string.IsNullOrWhiteSpace(lecturer))
             {
-                ViewBag.ErrorMessage = "Please provide valid data and upload a document.";
+                ViewBag.ErrorMessage = "Lecturer name is required.";
+                return View("SubmitAndTrackClaim", claims);
+            }
+            if (hoursWorked <= 0)
+            {
+                ViewBag.ErrorMessage = "Hours worked must be greater than 0.";
+                return View("SubmitAndTrackClaim", claims);
+            }
+            if (hourlyRate <= 0)
+            {
+                ViewBag.ErrorMessage = "Hourly rate must be greater than 0.";
+                return View("SubmitAndTrackClaim", claims);
+            }
+            if (document == null)
+            {
+                ViewBag.ErrorMessage = "Please upload a valid document.";
                 return View("SubmitAndTrackClaim", claims);
             }
 
@@ -49,7 +64,7 @@ namespace PROG6212_Part1.Controllers
             // Generate a new claim ID
             int newClaimId = claims.Count + 1;
 
-            // Define the storage path 
+            // Define the storage path
             string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
             if (!Directory.Exists(uploadFolder))
             {
@@ -74,12 +89,13 @@ namespace PROG6212_Part1.Controllers
                 HoursWorked = hoursWorked,
                 HourlyRate = hourlyRate,
                 Notes = notes,
-                DocumentPath = $"/uploads/{uniqueFileName}", // Store relative path
+                DocumentPath = $"/uploads/{uniqueFileName}",
                 Status = "Pending"
             });
 
             // Redirect to the Submit and Track Claim page
             return RedirectToAction("SubmitAndTrackClaim");
         }
+
     }
 }
